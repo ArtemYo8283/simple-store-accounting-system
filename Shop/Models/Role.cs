@@ -30,6 +30,7 @@ namespace Shop.Models
                 string name = reader.GetString("title");
                 result.Add(new Role(ide, name));
             }
+            reader.Close();
             return result;
         }
         public static async Task<List<Role>> SelectById(int id)
@@ -44,6 +45,7 @@ namespace Shop.Models
                 string name = reader.GetString("title");
                 result.Add(new Role(ide, name));
             }
+            reader.Close();
             return result;
         }
         public static async Task<int> Create(string title)
@@ -53,9 +55,9 @@ namespace Shop.Models
             int rowsAffected = command.ExecuteNonQuery();
             return rowsAffected;
         }
-        public static async Task<int> Update(string title)
+        public static async Task<int> Update(string title, int id)
         {
-            string sql = string.Format("UPDATE roles SET title='{0}';", title);
+            string sql = string.Format("UPDATE roles SET title='{0}' WHERE id={1};", title, id);
             MySqlCommand command = new MySqlCommand(sql, App.connection);
             int rowsAffected = command.ExecuteNonQuery();
             return rowsAffected;

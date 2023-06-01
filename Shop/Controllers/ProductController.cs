@@ -31,9 +31,9 @@ namespace Shop.Controllers
             }
             return true;
         }
-        public static async Task<bool> Update(Dictionary<string, Object> field)
+        public static async Task<bool> Update(Dictionary<string, Object> field, int id)
         {
-            int result = await Product.Update(field);
+            int result = await Product.Update(field, id);
             if (result == 0)
             {
                 return false;

@@ -1,0 +1,52 @@
+﻿<Window x:Class="Shop.View.Register"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Shop.View"
+        mc:Ignorable="d"
+        Title="Register" Height="450" Width="700" Loaded="Window_Loaded" ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="180*"/>
+            <ColumnDefinition Width="180*"/>
+            <ColumnDefinition Width="80*"/>
+            <ColumnDefinition Width="240*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="1" Content="Login" HorizontalAlignment="Left" Margin="9,0,0,0"  VerticalAlignment="Center" Height="30" RenderTransformOrigin="0.518,0.501" Grid.Column="1" Width="39"/>
+        <TextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="250" Height="30" Name="login" Grid.ColumnSpan="3" Margin="180,0,0,0"/>
+        <Label Grid.Column="4" Grid.Row="1" Content="" HorizontalAlignment="Center" VerticalAlignment="Center" Width="219" Foreground="Red" Name="err1" Height="26"/>
+
+
+        <Label Grid.Row="2" Content="Fio" HorizontalAlignment="Left" Margin="9,0,0,0"  VerticalAlignment="Center" Height="30" Grid.Column="1" Width="26"/>
+        <TextBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="250" Height="30" Name="fio" Grid.ColumnSpan="3" Margin="180,0,0,0"/>
+        <Label Grid.Column="4" Grid.Row="2" Content="" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="219" Foreground="Red" Name="err2" Height="26"/>
+
+        <Label Grid.Row="3" Content="Password" HorizontalAlignment="Left" Margin="9,0,0,0"  VerticalAlignment="Center" Height="30" Grid.Column="1" Width="60"/>
+        <PasswordBox Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="250" Height="30" Name="password" Grid.ColumnSpan="3" Margin="180,0,0,0"/>
+        <TextBlock Grid.Column="4" Grid.Row="3" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="219" Foreground="Red" Name="err3" Height="54" TextWrapping="Wrap"/>
+
+        <Label Grid.Row="4" Content="Repeat password" HorizontalAlignment="Left" Margin="9,9,0,0"  VerticalAlignment="Top" Height="30" Grid.Column="1" Width="100"/>
+        <PasswordBox Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="250" Height="30" Name="password_rep" Grid.ColumnSpan="3" Margin="180,0,0,0"/>
+        <Label Grid.Column="4" Grid.Row="4" Content="" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="219" Foreground="Red" Name="err4" Height="26"/>
+
+        <Label Grid.Row="5" Content="Role" HorizontalAlignment="Left" Margin="9,0,0,0"  VerticalAlignment="Center" Height="30" Grid.Column="1" Width="33"/>
+        <ComboBox Grid.Column="1" Grid.Row="5" Name="RoleBox" DisplayMemberPath="Title" SelectedValuePath="Id" Margin="180,12,11,13" Grid.ColumnSpan="2"/>
+        <Label Grid.Column="4" Grid.Row="5" Content="" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="219" Foreground="Red" Name="err5" Height="26"/>
+
+        <Button Grid.Column="1" Content="Ok" HorizontalAlignment="Center" Grid.Row="7" VerticalAlignment="Center" Width="100" Height="30" Name="Submit_btn" Click="Submit_btn_Click"/>
+        <Button Grid.Column="2" Content="Cancel" HorizontalAlignment="Center" Grid.Row="7" VerticalAlignment="Center" Width="100" Height="30" Name="Cancel_btn" Click="Cancel_btn_Click"/>
+    </Grid>
+</Window>

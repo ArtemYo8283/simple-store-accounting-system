@@ -12,6 +12,7 @@ using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 
 using Shop.Models;
+using Shop.View;
 
 namespace Shop
 {
@@ -30,6 +31,12 @@ namespace Shop
     public partial class App : Application
     {
         public static MySqlConnection? connection;
+
+        public static string? Login_Session;
+
+        public static string? Fio_Session;
+
+        public static string? Role_Session;
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {

@@ -43,6 +43,7 @@ namespace Shop.Models
                 string st = reader.GetString("status");
                 result.Add(new Order(ide, fio_client, phone_client, email_client, address_client, Utils.StringToStatus(st)));
             }
+            reader.Close();
             return result;
         }
         public static async Task<List<Order>> SelectById(int id)
@@ -61,6 +62,7 @@ namespace Shop.Models
                 string st = reader.GetString("status");
                 result.Add(new Order(ide, fio_client, phone_client, email_client, address_client, Utils.StringToStatus(st)));
             }
+            reader.Close();
             return result;
         }
         public static async Task<int> Create(string fio_client, string phone_client, string email_client, string address_client, Status st)
@@ -70,12 +72,12 @@ namespace Shop.Models
             int rowsAffected = command.ExecuteNonQuery();
             return rowsAffected;
         }
-        public static async Task<int> Update(Dictionary<string, Object> field)
+        public static async Task<int> Update(Dictionary<string, Object> field, int id)
         {
             string sql = "";
             foreach (var item in field)
             {
-                sql += string.Format("UPDATE orders SET {0}='{1}';", item.Key, item.Value);
+                sql += string.Format("UPDATE orders SET {0}='{1}' WHERE id={2};", item.Key, item.Value, id);
             }
             MySqlCommand command = new MySqlCommand(sql, App.connection);
             int rowsAffected = command.ExecuteNonQuery();

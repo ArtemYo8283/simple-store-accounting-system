@@ -43,6 +43,7 @@ namespace Shop.Models
                 int role_id = reader.GetInt32("role_id");
                 result.Add(new User(ide, login, password, fio, last_login_date, role_id));
             }
+            reader.Close();
             return result;
         }
         public static async Task<List<User>> SelectById(int id)
@@ -61,21 +62,22 @@ namespace Shop.Models
                 int role_id = reader.GetInt32("role_id");
                 result.Add(new User(ide, login, password, fio, last_login_date, role_id));
             }
+            reader.Close();
             return result;
         }
         public static async Task<int> Create(string login, string password, string fio, string last_login_date, int role_id)
         {
-            string sql = string.Format("INSERT INTO users (id, login, password, fio, last_login_date, role_id) VALUES ('{0}', '{1}', '{2}', '{3}', {4});", login, password, fio, last_login_date, role_id);
+            string sql = string.Format("INSERT INTO users (login, password, fio, last_login_date, role_id) VALUES ('{0}', '{1}', '{2}', '{3}', {4});", login, password, fio, last_login_date, role_id);
             MySqlCommand command = new MySqlCommand(sql, App.connection);
             int rowsAffected = command.ExecuteNonQuery();
             return rowsAffected;
         }
-        public static async Task<int> Update(Dictionary<string, Object> field)
+        public static async Task<int> Update(Dictionary<string, Object> field, int id)
         {
             string sql = "";
             foreach (var item in field)
             {
-                sql += string.Format("UPDATE users SET {0}='{1}';", item.Key, item.Value);
+                sql += string.Format("UPDATE users SET {0}='{1}' WHERE id={2};", item.Key, item.Value, id);
             }
             MySqlCommand command = new MySqlCommand(sql, App.connection);
             int rowsAffected = command.ExecuteNonQuery();

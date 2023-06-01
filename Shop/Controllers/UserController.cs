@@ -30,10 +30,10 @@ namespace Shop.Controllers
             }
             return true;
         }
-        public static async Task<bool> Update(Dictionary<string, Object> field)
+        public static async Task<bool> Update(Dictionary<string, Object> field, int id)
         {
             //на апдейт пароля, хеш подавать
-            int result = await User.Update(field);
+            int result = await User.Update(field, id);
             if (result == 0)
             {
                 return false;

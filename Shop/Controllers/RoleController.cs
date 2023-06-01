@@ -27,9 +27,9 @@ namespace Shop.Controllers
             }
             return true;
         }
-        public static async Task<bool> Update(string title)
+        public static async Task<bool> Update(string title, int id)
         {
-            int result = await Role.Update(title);
+            int result = await Role.Update(title, id);
             if (result == 0)
             {
                 return false;

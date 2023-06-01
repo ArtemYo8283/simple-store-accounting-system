@@ -5,19 +5,79 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Shop.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280">
+        Title="MainWindow" Height="720" Width="1280" Loaded="Window_Loaded">
     <TabControl>
-        <TabItem Header="Orders">
-            <Grid Background="#FFE5E5E5"/>
+        <TabItem Header="Orders" Name="Orders_Page">
+            <Grid Background="#FFE5E5E5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="850*"/>
+                    <ColumnDefinition Width="426*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                </Grid.RowDefinitions>
+                <DataGrid Name="ordersGrid" Grid.Row="0" Grid.RowSpan="10" Margin="0,0,10,0">
+
+                </DataGrid>
+                <Button Grid.Column="1" Content="Create New Order" HorizontalAlignment="Center" VerticalAlignment="Center" Height="33" Width="402" Click="CreateOrderbtn_Click"/>
+            </Grid>
         </TabItem>
-        <TabItem Header="Products">
-            <Grid Background="#FFE5E5E5"/>
+        <TabItem Header="Products" Name="Products_Page">
+            <Grid Background="#FFE5E5E5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="850*"/>
+                    <ColumnDefinition Width="426*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                </Grid.RowDefinitions>
+                <DataGrid Name="productsGrid" Grid.Row="0" Grid.RowSpan="10" Margin="0,0,10,0">
+
+                </DataGrid>
+                <Button Grid.Column="1" Content="Create new Product" HorizontalAlignment="Center" VerticalAlignment="Center" Height="33" Width="402" Name="CreateProductbtn" Click="CreateProductbtn_Click"/>
+            </Grid>
         </TabItem>
-        <TabItem Header="Profile">
-            <Grid Background="#FFE5E5E5"/>
-        </TabItem>
-        <TabItem Header="Log out">
-            <Grid Background="#FFE5E5E5"/>
+        <TabItem Header="Users" Name="Users_Page">
+            <Grid Background="#FFE5E5E5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="850*"/>
+                    <ColumnDefinition Width="426*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                    <RowDefinition Height="72*"/>
+                </Grid.RowDefinitions>
+                <DataGrid Name="usersGrid" Grid.Row="0" Grid.RowSpan="10" Margin="0,0,10,0">
+
+                </DataGrid>
+                <Button Grid.Column="1" Content="Register new User" HorizontalAlignment="Center" VerticalAlignment="Center" Height="33" Width="402" Click="RegisterUserbtn_Click"/>
+            </Grid>
         </TabItem>
     </TabControl>
 </Window>

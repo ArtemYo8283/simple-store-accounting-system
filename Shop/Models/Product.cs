@@ -38,6 +38,7 @@ namespace Shop.Models
                 int count = reader.GetInt32("count");
                 result.Add(new Product(ide, title, description, price, count));
             }
+            reader.Close();
             return result;
         }
         public static async Task<List<Product>> SelectById(int id)
@@ -55,11 +56,12 @@ namespace Shop.Models
                 int count = reader.GetInt32("count");
                 result.Add(new Product(ide, title, description, price, count));
             }
+            reader.Close();
             return result;
         }
         public static async Task<List<Product>> SelectByOrderId(int id)
         {
-            string sql = string.Format("SELECT * FROM products WHERE id={0};", id);
+            string sql = string.Format("SELECT products.id, products.title, products.description, products.price, products.count FROM products INNER JOIN order_product ON order_product.order_id = {0} AND products.id = order_product.product_id;", id);
             MySqlCommand command = new MySqlCommand(sql, App.connection);
             MySqlDataReader reader = command.ExecuteReader();
             List<Product> result = new List<Product>();
@@ -72,6 +74,7 @@ namespace Shop.Models
                 int count = reader.GetInt32("count");
                 result.Add(new Product(ide, title, description, price, count));
             }
+            reader.Close();
             return result;
         }
         public static async Task<int> Create(string title, string description, double price, int count)
@@ -81,12 +84,12 @@ namespace Shop.Models
             int rowsAffected = command.ExecuteNonQuery();
             return rowsAffected;
         }
-        public static async Task<int> Update(Dictionary<string, Object> field)
+        public static async Task<int> Update(Dictionary<string, Object> field, int id)
         {
             string sql = "";
             foreach (var item in field)
             {
-                sql += string.Format("UPDATE products SET {0}='{1}';", item.Key, item.Value);
+                sql += string.Format("UPDATE products SET {0}='{1}' WHERE id={2};", item.Key, item.Value, id);
             }
             MySqlCommand command = new MySqlCommand(sql, App.connection);
             int rowsAffected = command.ExecuteNonQuery();
@@ -100,3 +103,4 @@ namespace Shop.Models
             return rowsAffected;
         }
     }
+}
