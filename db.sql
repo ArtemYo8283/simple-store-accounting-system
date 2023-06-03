@@ -139,7 +139,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   KEY `FK0_idx` (`role_id`),
   CONSTRAINT `FK0` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -148,6 +148,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'abondar','c3df2ffdb3ee113b22923b722f2ca59bd5fd4396701280eeb0bfbc831ca494ee','Artem Bondar','2023-06-02 02:40:49',3),(2,'abondar1','c3df2ffdb3ee113b22923b722f2ca59bd5fd4396701280eeb0bfbc831ca494ee','Artem Bondar','2023-06-02 02:11:03',2),(3,'abondar2','c3df2ffdb3ee113b22923b722f2ca59bd5fd4396701280eeb0bfbc831ca494ee','Abobishe','2023-06-02 02:11:48',1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -160,4 +161,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-01  1:30:00
+-- Dump completed on 2023-06-03 23:31:37
