@@ -16,6 +16,7 @@ using Shop.Controllers;
 using System.Collections;
 using System.Threading;
 using System.Diagnostics.Eventing.Reader;
+using System.Text.RegularExpressions;
 
 namespace Shop.View
 {
@@ -27,6 +28,9 @@ namespace Shop.View
         public MainWindow()
         {
             InitializeComponent();
+            ordersGrid.IsReadOnly = true;
+            productsGrid.IsReadOnly = true;
+            usersGrid.IsReadOnly = true;
             if (App.Role_Session == "cashier")
             {
                 productsGrid.IsReadOnly = true;
@@ -234,6 +238,55 @@ namespace Shop.View
 
         }
 
+        private void count_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !Regex.IsMatch(e.Text, @"^\d+$");
+        }
 
+        private void price_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            string proposedText = textBox.Text + e.Text;
+
+            if (!Regex.IsMatch(proposedText, @"^[0-9]*(?:\,[0-9]*)?$"))
+            {
+                e.Handled = true; // Prevents the input from being entered in the TextBox
+            }
+        }
+
+
+        private async void UpdateOrderbtn_Click(object sender, RoutedEventArgs e)
+        {
+            bool valid = true;
+            err1_product_upd.Content = "";
+            err2_product_upd.Content = "";
+            err3_product_upd.Content = "";
+            err4_product_upd.Content = "";
+        }
+
+        private async void UpdateProductbtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private async void UpdateUserbtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Logout_menu_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Login newWindow = new Login();
+            newWindow.Show();
+            App.Login_Session = null;
+            App.Fio_Session = null;
+            App.Role_Session = null;
+            this.Close();
+        }
+
+        private void EditProfile_menu_btn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
