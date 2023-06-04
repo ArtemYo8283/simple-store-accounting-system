@@ -26,7 +26,8 @@ namespace Shop
         Delivery_in_progress,
         Delivered,
         Received,
-        Completed
+        Completed,
+        Canceled
     }
     public partial class App : Application
     {

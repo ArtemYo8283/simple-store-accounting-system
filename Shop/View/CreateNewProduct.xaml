@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Shop.View"
         mc:Ignorable="d"
-        Title="CreateNewProduct" Height="450" Width="700">
+        Title="CreateNewProduct" Height="500" Width="700">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20*"/>
@@ -22,6 +22,7 @@
             <RowDefinition Height="50*"/>
             <RowDefinition Height="50*"/>
             <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*"/>
         </Grid.RowDefinitions>
 
         <Label Grid.Column="1" Grid.Row="1" Content="Title" HorizontalAlignment="Left" Margin="0,18,0,0"  VerticalAlignment="Top" Height="30" Width="33"/>
@@ -29,18 +30,18 @@
         <Label Grid.Column="4" Grid.Row="1" Content="" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="219" Foreground="Red" Name="err1" Height="30" Margin="0,18,0,0"/>
 
         <Label Grid.Column="1" Grid.Row="2" Content="Description" HorizontalAlignment="Left" Margin="0,18,0,0"  VerticalAlignment="Top" Height="30" Width="70"/>
-        <TextBox Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left" Margin="16,18,0,0"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="280" Height="30" Name="description" Grid.ColumnSpan="2"/>
+        <TextBox Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left" Margin="16,18,0,0"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="280" Height="93" Name="description" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
         <Label Grid.Column="4" Grid.Row="2" Content="" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="220" Foreground="Red" Name="err2" Height="30" Margin="0,18,0,0"/>
 
-        <Label Grid.Column="1" Grid.Row="3" Content="Price" HorizontalAlignment="Left" Margin="0,18,0,0"  VerticalAlignment="Top" Height="30" Width="36"/>
-        <TextBox Grid.Column="2" Grid.Row="3" HorizontalAlignment="Left" Margin="16,18,0,0"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="280" Height="30" Name="price" Grid.ColumnSpan="2"/>
-        <Label Grid.Column="4" Grid.Row="3" Content="" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="219" Foreground="Red" Name="err3" Height="30" Margin="0,18,0,0"/>
+        <Label Grid.Column="1" Grid.Row="4" Content="Price" HorizontalAlignment="Left" Margin="0,18,0,0"  VerticalAlignment="Top" Height="30" Width="36"/>
+        <TextBox Grid.Column="2" Grid.Row="4" HorizontalAlignment="Left" Margin="16,18,0,0"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="280" Height="30" Name="price" Grid.ColumnSpan="2" PreviewTextInput="price_PreviewTextInput"/>
+        <Label Grid.Column="4" Grid.Row="4" Content="" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="219" Foreground="Red" Name="err3" Height="30" Margin="0,18,0,0"/>
 
-        <Label Grid.Column="1" Grid.Row="4" Content="Count" HorizontalAlignment="Left" Margin="0,18,0,0"  VerticalAlignment="Top" Height="30" Width="42"/>
-        <TextBox Grid.Column="2" Grid.Row="4" HorizontalAlignment="Left" Margin="16,18,0,0"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="280" Height="30" Name="count" Grid.ColumnSpan="2"/>
-        <Label Grid.Column="4" Grid.Row="4" Content="" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="220" Foreground="Red" Name="err4" Height="30" Margin="0,18,0,0"/>
+        <Label Grid.Column="1" Grid.Row="5" Content="Count" HorizontalAlignment="Left" Margin="0,18,0,0"  VerticalAlignment="Top" Height="30" Width="42"/>
+        <TextBox Grid.Column="2" Grid.Row="5" HorizontalAlignment="Left" Margin="16,18,0,0"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="280" Height="30" Name="count" Grid.ColumnSpan="2" PreviewTextInput="count_PreviewTextInput"/>
+        <Label Grid.Column="4" Grid.Row="5" Content="" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="220" Foreground="Red" Name="err4" Height="30" Margin="0,18,0,0"/>
 
-        <Button Grid.Column="1" Content="Ok" HorizontalAlignment="Center" Grid.Row="6" VerticalAlignment="Center" Width="100" Height="30" Name="Submit_btn" Click="Submit_btn_Click"/>
-        <Button Grid.Column="2" Content="Cancel" HorizontalAlignment="Center" Grid.Row="6" VerticalAlignment="Center" Width="100" Height="30" Name="Cancel_btn" Click="Cancel_btn_Click"/>
+        <Button Grid.Column="1" Content="Ok" HorizontalAlignment="Center" Grid.Row="7" VerticalAlignment="Center" Width="100" Height="30" Name="Submit_btn" Click="Submit_btn_Click"/>
+        <Button Grid.Column="2" Content="Cancel" HorizontalAlignment="Center" Grid.Row="7" VerticalAlignment="Center" Width="100" Height="30" Name="Cancel_btn" Click="Cancel_btn_Click"/>
     </Grid>
 </Window>

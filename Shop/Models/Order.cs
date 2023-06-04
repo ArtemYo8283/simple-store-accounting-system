@@ -36,10 +36,10 @@ namespace Shop.Models
             while (reader.Read())
             {
                 int ide = reader.GetInt32("id");
-                string fio_client = reader.GetString("login");
-                string phone_client = reader.GetString("password");
-                string email_client = reader.GetString("fio");
-                string address_client = reader.GetString("fio");
+                string fio_client = reader.GetString("fio_client");
+                string phone_client = reader.GetString("phone_client");
+                string email_client = reader.GetString("email_client");
+                string address_client = reader.GetString("address_client");
                 string st = reader.GetString("status");
                 result.Add(new Order(ide, fio_client, phone_client, email_client, address_client, Utils.StringToStatus(st)));
             }

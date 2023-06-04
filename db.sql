@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `shopcsharp` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `shopcsharp`;
--- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
 -- Host: localhost    Database: shopcsharp
 -- ------------------------------------------------------
--- Server version	8.0.31
+-- Server version	8.0.33
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,6 +28,7 @@ CREATE TABLE `order_product` (
   `id` int NOT NULL,
   `order_id` int NOT NULL,
   `product_id` int NOT NULL,
+  `product_count` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `FK0_idx` (`order_id`),
   KEY `FK1_OP_idx` (`product_id`),
@@ -44,6 +45,48 @@ LOCK TABLES `order_product` WRITE;
 /*!40000 ALTER TABLE `order_product` DISABLE KEYS */;
 /*!40000 ALTER TABLE `order_product` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `order_product_BEFORE_INSERT` BEFORE INSERT ON `order_product` FOR EACH ROW BEGIN
+	DECLARE table1_count INT;
+    DECLARE table2_limit INT;
+
+	SET table1_count = NEW.product_count;
+    SELECT count INTO table2_limit FROM `shopcsharp`.`product` WHERE id = NEW.product_id;
+    
+    IF table1_count >= table2_limit THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Not enough product!';
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `order_product_AFTER_INSERT` AFTER INSERT ON `order_product` FOR EACH ROW BEGIN
+	 UPDATE `shopcsharp`.`products` SET count = count - NEW.product_count;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `orders`
@@ -58,9 +101,9 @@ CREATE TABLE `orders` (
   `phone_client` varchar(500) NOT NULL,
   `email_client` varchar(500) DEFAULT NULL,
   `address_client` varchar(500) NOT NULL,
-  `status` enum('New','Waiting for payment','Paid','Confirmed','Awaiting shipment','Delivery in progress','Delivered','Received','Completed') NOT NULL DEFAULT 'New',
+  `status` enum('New','Waiting for payment','Paid','Confirmed','Awaiting shipment','Delivery in progress','Delivered','Received','Completed','Canceled') NOT NULL DEFAULT 'New',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,6 +112,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (1,'qwertyu','+380660683912','artemwot90@gmail.com','aksaflamdg;sdm','Paid');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,11 +126,11 @@ DROP TABLE IF EXISTS `products`;
 CREATE TABLE `products` (
   `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
-  `description` varchar(500) DEFAULT NULL,
+  `description` varchar(1000) DEFAULT NULL,
   `price` double NOT NULL,
   `count` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,6 +139,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
+INSERT INTO `products` VALUES (1,'dadasfasff','mm;lsdmgksd',1234,123),(2,'Atrtrf','dfsdf',234,234325),(3,'dasdas','sadasdas',123123,123123),(4,'eqweqw','eqweqweq',12312,31212);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,7 +193,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'abondar','c3df2ffdb3ee113b22923b722f2ca59bd5fd4396701280eeb0bfbc831ca494ee','Artem Bondar','2023-06-02 02:40:49',3),(2,'abondar1','c3df2ffdb3ee113b22923b722f2ca59bd5fd4396701280eeb0bfbc831ca494ee','Artem Bondar','2023-06-02 02:11:03',2),(3,'abondar2','c3df2ffdb3ee113b22923b722f2ca59bd5fd4396701280eeb0bfbc831ca494ee','Abobishe','2023-06-02 02:11:48',1);
+INSERT INTO `users` VALUES (1,'abondar','c3df2ffdb3ee113b22923b722f2ca59bd5fd4396701280eeb0bfbc831ca494ee','Artem Bondar','2023-06-04 19:58:46',3),(2,'abondar1','c3df2ffdb3ee113b22923b722f2ca59bd5fd4396701280eeb0bfbc831ca494ee','Artem Bondar','2023-06-04 18:41:46',2),(3,'abondar2','c3df2ffdb3ee113b22923b722f2ca59bd5fd4396701280eeb0bfbc831ca494ee','Abobishe','2023-06-04 19:45:58',1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -161,4 +206,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-03 23:31:37
+-- Dump completed on 2023-06-04 20:57:16

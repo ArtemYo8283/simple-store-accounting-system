@@ -53,6 +53,9 @@ namespace Shop.Models
                 case Status.Completed:
                     return "Completed";
                     break;
+                case Status.Canceled:
+                    return "Canceled";
+                    break;
             }
             return "";
         }
@@ -86,6 +89,9 @@ namespace Shop.Models
                     break;
                 case "Completed":
                     return Status.Completed;
+                    break;
+                case "Canceled":
+                    return Status.Canceled;
                     break;
             }
             return Status.New;

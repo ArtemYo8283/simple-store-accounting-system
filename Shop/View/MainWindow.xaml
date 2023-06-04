@@ -8,7 +8,7 @@
         Title="MainWindow" Height="720" Width="1280" Loaded="Window_Loaded">
     <TabControl>
         <TabItem Header="Orders" Name="Orders_Page">
-            <Grid Background="#FFE5E5E5">
+            <Grid Background="#FFE5E5E5" Loaded="Orders_Page_Loaded">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="850*"/>
                     <ColumnDefinition Width="426*"/>
@@ -25,14 +25,36 @@
                     <RowDefinition Height="72*"/>
                     <RowDefinition Height="72*"/>
                 </Grid.RowDefinitions>
-                <DataGrid Name="ordersGrid" Grid.Row="0" Grid.RowSpan="10" Margin="0,0,10,0">
-
+                <DataGrid Name="ordersGrid" Grid.Row="0" Grid.RowSpan="10" Margin="0,0,10,0" SelectionMode="Single" SelectionChanged="ordersGrid_SelectionChanged" KeyDown="ordersGrid_KeyDown">
+                    <DataGrid.Columns>
+                        <!-- Delete button column -->
+                        <DataGridTemplateColumn Width="Auto" >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Delete" Click="DeleteOrderButton_Click">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding OrderDelBtnVisibility}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding OrderDelBtnVisibility}" Value="False">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
                 </DataGrid>
                 <Button Grid.Column="1" Content="Create New Order" HorizontalAlignment="Center" VerticalAlignment="Center" Height="33" Width="402" Click="CreateOrderbtn_Click"/>
             </Grid>
         </TabItem>
         <TabItem Header="Products" Name="Products_Page">
-            <Grid Background="#FFE5E5E5">
+            <Grid Background="#FFE5E5E5" Loaded="Products_Page_Loaded">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="850*"/>
                     <ColumnDefinition Width="426*"/>
@@ -49,14 +71,36 @@
                     <RowDefinition Height="72*"/>
                     <RowDefinition Height="72*"/>
                 </Grid.RowDefinitions>
-                <DataGrid Name="productsGrid" Grid.Row="0" Grid.RowSpan="10" Margin="0,0,10,0">
-
+                <DataGrid Name="productsGrid" Grid.Row="0" Grid.RowSpan="10" Margin="0,0,10,0" SelectionMode="Single" SelectionChanged="productsGrid_SelectionChanged" KeyDown="productsGrid_KeyDown">
+                    <DataGrid.Columns>
+                        <!-- Delete button column -->
+                        <DataGridTemplateColumn Width="Auto" >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Delete" Click="DeleteProductButton_Click">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ProductDelBtnVisibility}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding ProductDelBtnVisibility}" Value="False">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
                 </DataGrid>
                 <Button Grid.Column="1" Content="Create new Product" HorizontalAlignment="Center" VerticalAlignment="Center" Height="33" Width="402" Name="CreateProductbtn" Click="CreateProductbtn_Click"/>
             </Grid>
         </TabItem>
         <TabItem Header="Users" Name="Users_Page">
-            <Grid Background="#FFE5E5E5">
+            <Grid Background="#FFE5E5E5" Loaded="Users_Page_Loaded" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="850*"/>
                     <ColumnDefinition Width="426*"/>
@@ -73,8 +117,30 @@
                     <RowDefinition Height="72*"/>
                     <RowDefinition Height="72*"/>
                 </Grid.RowDefinitions>
-                <DataGrid Name="usersGrid" Grid.Row="0" Grid.RowSpan="10" Margin="0,0,10,0">
-
+                <DataGrid Name="usersGrid" Grid.Row="0" Grid.RowSpan="10" Margin="0,0,10,0" SelectionMode="Single" SelectionChanged="usersGrid_SelectionChanged" KeyDown="usersGrid_KeyDown">
+                    <DataGrid.Columns>
+                        <!-- Delete button column -->
+                        <DataGridTemplateColumn Width="Auto" >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Delete" Click="DeleteUserButton_Click">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding UserDelBtnVisibility}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding UserDelBtnVisibility}" Value="False">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
                 </DataGrid>
                 <Button Grid.Column="1" Content="Register new User" HorizontalAlignment="Center" VerticalAlignment="Center" Height="33" Width="402" Click="RegisterUserbtn_Click"/>
             </Grid>
