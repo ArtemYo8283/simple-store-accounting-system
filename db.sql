@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `order_product`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order_product` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `order_id` int NOT NULL,
   `product_id` int NOT NULL,
   `product_count` int NOT NULL DEFAULT '1',
@@ -34,7 +34,7 @@ CREATE TABLE `order_product` (
   KEY `FK1_OP_idx` (`product_id`),
   CONSTRAINT `FK0_OP` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FK1_OP` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,6 +43,7 @@ CREATE TABLE `order_product` (
 
 LOCK TABLES `order_product` WRITE;
 /*!40000 ALTER TABLE `order_product` DISABLE KEYS */;
+INSERT INTO `order_product` VALUES (5,1,1,2),(6,1,2,34);
 /*!40000 ALTER TABLE `order_product` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -59,7 +60,7 @@ DELIMITER ;;
     DECLARE table2_limit INT;
 
 	SET table1_count = NEW.product_count;
-    SELECT count INTO table2_limit FROM `shopcsharp`.`product` WHERE id = NEW.product_id;
+    SELECT count INTO table2_limit FROM `shopcsharp`.`products` WHERE id = NEW.product_id;
     
     IF table1_count >= table2_limit THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Not enough product!';
@@ -80,7 +81,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `order_product_AFTER_INSERT` AFTER INSERT ON `order_product` FOR EACH ROW BEGIN
-	 UPDATE `shopcsharp`.`products` SET count = count - NEW.product_count;
+	 UPDATE `shopcsharp`.`products` SET count = count - NEW.product_count WHERE id = NEW.product_id;
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -139,7 +140,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (1,'dadasfasff','mm;lsdmgksd',1234,123),(2,'Atrtrf','dfsdf',234,234325),(3,'dasdas','sadasdas',123123,123123),(4,'eqweqw','eqweqweq',12312,31212);
+INSERT INTO `products` VALUES (1,'dadasfasff','mm;lsdmgksd',1234,121),(2,'Atrtrf','dfsdf',234,234291),(3,'dasdas121313','sadasdas',123123,123123);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -193,7 +194,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'abondar','c3df2ffdb3ee113b22923b722f2ca59bd5fd4396701280eeb0bfbc831ca494ee','Artem Bondar','2023-06-04 19:58:46',3),(2,'abondar1','c3df2ffdb3ee113b22923b722f2ca59bd5fd4396701280eeb0bfbc831ca494ee','Artem Bondar','2023-06-04 18:41:46',2),(3,'abondar2','c3df2ffdb3ee113b22923b722f2ca59bd5fd4396701280eeb0bfbc831ca494ee','Abobishe','2023-06-04 19:45:58',1);
+INSERT INTO `users` VALUES (1,'abondar','c3df2ffdb3ee113b22923b722f2ca59bd5fd4396701280eeb0bfbc831ca494ee','Artem Bondar','2023-06-08 12:41:46',3),(2,'abondar1','c3df2ffdb3ee113b22923b722f2ca59bd5fd4396701280eeb0bfbc831ca494ee','Artem Bondar','2023-06-04 18:41:46',2),(3,'abondar2','c3df2ffdb3ee113b22923b722f2ca59bd5fd4396701280eeb0bfbc831ca494ee','Abobishe12345','2023-06-06 00:15:57',1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -206,4 +207,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-04 20:57:16
+-- Dump completed on 2023-06-08 12:42:40

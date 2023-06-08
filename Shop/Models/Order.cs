@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using MySqlX.XDevAPI.Common;
+using Shop.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace Shop.Models
         public string Email_client { get; set; }
         public string Address_client { get; set; }
         public Status status { get; set; }
+
+        public List<Product> products { get; set; }
 
         public Order(int Id, string Fio_client, string Phone_client, string Email_client, string Address_client, Status status)
         {
@@ -44,6 +47,11 @@ namespace Shop.Models
                 result.Add(new Order(ide, fio_client, phone_client, email_client, address_client, Utils.StringToStatus(st)));
             }
             reader.Close();
+            foreach (Order item in result)
+            {
+                List<Product> products = await ProductController.SelectByOrderId(item.Id);
+                item.products = products;
+            }
             return result;
         }
         public static async Task<List<Order>> SelectById(int id)
@@ -63,6 +71,11 @@ namespace Shop.Models
                 result.Add(new Order(ide, fio_client, phone_client, email_client, address_client, Utils.StringToStatus(st)));
             }
             reader.Close();
+            foreach (Order item in result)
+            {
+                List<Product> products = await ProductController.SelectByOrderId(item.Id);
+                item.products = products;
+            }
             return result;
         }
         public static async Task<int> Create(string fio_client, string phone_client, string email_client, string address_client, Status st)
