@@ -20,7 +20,9 @@ namespace Shop.Controllers
         }
         public static async Task<bool> Create(string fio_client, string phone_client, string email_client, string address_client, Status st)
         {
-            int result = await Order.Create(fio_client, phone_client, email_client, address_client, st);
+            DateTime currentDateTime = DateTime.Now;
+            string last_upd_date = currentDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+            int result = await Order.Create(fio_client, phone_client, email_client, address_client, last_upd_date, st);
             if (result == 0)
             {
                 return false;
@@ -29,6 +31,9 @@ namespace Shop.Controllers
         }
         public static async Task<bool> Update(Dictionary<string, Object> field, int id)
         {
+            DateTime currentDateTime = DateTime.Now;
+            string last_upd_date = currentDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+            field.Add("last_upd_date", last_upd_date);
             int result = await Order.Update(field, id);
             if (result == 0)
             {

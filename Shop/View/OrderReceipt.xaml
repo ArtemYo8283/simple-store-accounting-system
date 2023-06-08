@@ -24,13 +24,11 @@
         </Grid.RowDefinitions>
 
 
-        <TextBox HorizontalAlignment="Center" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="380" Height="414" Grid.Row="0" Grid.RowSpan="9" IsEnabled="False"/>
+        <TextBox HorizontalAlignment="Center" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="380" Height="414" Grid.Row="0" Grid.RowSpan="9" IsEnabled="False" Name="receipt"/>
         <Button Name="Print_btn" Grid.Column="1" Grid.Row="0" Content="Print" HorizontalAlignment="Center" Height="28" VerticalAlignment="Center" Width="180" Click="Print_btn_Click"/>
         <Button Name="PrintToPDF_btn" Grid.Column="1" Grid.Row="1" Content="Print to PDF" HorizontalAlignment="Center" Height="28" VerticalAlignment="Center" Width="180" Click="PrintToPDF_btn_Click"/>
         <Button Name="PrintToTXT_btn" Grid.Column="1" Grid.Row="2" Content="Print to TXT" HorizontalAlignment="Center" Height="28" VerticalAlignment="Center" Width="180" Click="PrintToTXT_btn_Click"/>
-        <Button Name="PrintToExcel_btn" Grid.Column="1" Grid.Row="3" Content="Print to Excel" HorizontalAlignment="Center" Height="28" VerticalAlignment="Center" Width="180" Click="PrintToExcel_btn_Click"/>
-        <Button Name="PrintTo_btn" Grid.Column="1" Grid.Row="4" Content="Print to PDF" HorizontalAlignment="Center" Height="28" VerticalAlignment="Center" Width="180"/>
-
+        
         <Button Name="Exit_btn" Grid.Column="1" Grid.Row="8" Content="Exit" HorizontalAlignment="Center" Height="28" VerticalAlignment="Center" Width="180" Click="Exit_btn_Click"/>
     </Grid>
 </Window>

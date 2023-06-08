@@ -17,6 +17,7 @@ using System.Collections;
 using System.Threading;
 using System.Diagnostics.Eventing.Reader;
 using System.Text.RegularExpressions;
+using System.Windows.Controls.Primitives;
 
 namespace Shop.View
 {
@@ -36,11 +37,6 @@ namespace Shop.View
                 productsGrid.IsReadOnly = true;
                 Users_Page.Visibility = Visibility.Hidden;
                 CreateProductbtn.Visibility = Visibility.Hidden;
-
-
-
-
-
                 OrderDelBtnVisibility = false;
                 ProductDelBtnVisibility = false;
                 UserDelBtnVisibility = false;
@@ -90,10 +86,9 @@ namespace Shop.View
         private async void Orders_grid_upd()
         {
             List<Order> x = await OrderController.selectAll();
-
             ordersGrid.ItemsSource = x;
             x = null;
-
+            clear_fields(1, 2);
         }
 
         private async void Products_grid_upd()
@@ -101,11 +96,7 @@ namespace Shop.View
             List<Product> x = await ProductController.selectAll();
             productsGrid.ItemsSource = x;
             x = null;
-            title_product_upd.IsEnabled = false;
-            description_product_upd.IsEnabled = false;
-            price_product_upd.IsEnabled = false;
-            count_product_upd.IsEnabled = false;
-            UpdateProductbtn.IsEnabled = false;
+            clear_fields(2, 2);
         }
 
         private async void Users_grid_upd()
@@ -113,12 +104,7 @@ namespace Shop.View
             List<User> x = await UserController.selectAll();
             usersGrid.ItemsSource = x;
             x = null;
-            login_user_upd.IsEnabled = false;
-            fio_user_upd.IsEnabled = false;
-            password_user_upd.IsEnabled = false;
-            password_rep_user_upd.IsEnabled = false;
-            RoleBox_user_upd.IsEnabled = false;
-            UpdateUserbtn.IsEnabled = false;
+            clear_fields(3, 2);
         }
         //Create items button
         private async void CreateOrderbtn_Click(object sender, RoutedEventArgs e)
@@ -166,20 +152,85 @@ namespace Shop.View
         private async void UpdateOrderbtn_Click(object sender, RoutedEventArgs e)
         {
             bool valid = true;
+            clear_fields(1, 3);
+            if (fio_order_upd.Text.Length == 0)
+            {
+                err1_order_upd.Content = "Fio must be filled!";
+                valid = false;
+            }
+            else if (fio_order_upd.Text.Length > 500)
+            {
+                err1_order_upd.Content = "Fio must be less than 500 symbols!";
+                valid = false;
+            }
 
+            if (phone_order_upd.Text.Length == 0)
+            {
+                err2_order_upd.Content = "Phone must be filled!";
+                valid = false;
+            }
+            else if (phone_order_upd.Text.Length > 500)
+            {
+                err2_order_upd.Content = "Phone must be less than 500 symbols!";
+                valid = false;
+            }
+            else if (!Regex.IsMatch(phone_order_upd.Text, @"^\+?\d{1,3}\s?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$"))
+            {
+                err2_order_upd.Content = "Phone must be correct!";
+                valid = false;
+            }
+
+            if (email_order_upd.Text.Length == 0)
+            {
+                err3_order_upd.Content = "Email must be filled!";
+                valid = false;
+            }
+            else if (email_order_upd.Text.Length > 500)
+            {
+                err3_order_upd.Content = "Email must be less than 50 symbols!";
+                valid = false;
+            }
+            else if (!Regex.IsMatch(email_order_upd.Text, @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"))
+            {
+                err3_order_upd.Content = "Email must be correct!";
+                valid = false;
+            }
+
+            if (address_order_upd.Text.Length == 0)
+            {
+                err4_order_upd.Content = "Address must be filled!";
+                valid = false;
+            }
+            else if (address_order_upd.Text.Length > 500)
+            {
+                err4_order_upd.Content = "Address must be less than 50 symbols!";
+                valid = false;
+            }
+
+            if (StatusBox_order_upd.SelectedItem == null)
+            {
+                err5_order_upd.Content = "Status must be selected!";
+                valid = false;
+            }
             if (valid)
             {
-
+                Order selectedItem = (Order)ordersGrid.SelectedItem;
+                Dictionary<string, object> x = new Dictionary<string, object>();
+                x.Add("fio_client", fio_order_upd.Text);
+                x.Add("phone_client", phone_order_upd.Text);
+                x.Add("email_client", email_order_upd.Text);
+                x.Add("address_client", address_order_upd.Text);
+                x.Add("status", (Status)(int)StatusBox_order_upd.SelectedValue);
+                await OrderController.Update(x, selectedItem.Id);
+                clear_fields(1, 2);
+                Orders_grid_upd();
             }
         }
 
         private async void UpdateProductbtn_Click(object sender, RoutedEventArgs e)
         {
             bool valid = true;
-            err1_product_upd.Content = "";
-            err2_product_upd.Content = "";
-            err3_product_upd.Content = "";
-            err4_product_upd.Content = "";
+            clear_fields(2, 3);
             if (title_product_upd.Text.Length == 0)
             {
                 err1_product_upd.Content = "Title must be filled!";
@@ -237,15 +288,7 @@ namespace Shop.View
                 x.Add("price", Double.Parse(price_product_upd.Text));
                 x.Add("count", Int32.Parse(count_product_upd.Text));
                 await ProductController.Update(x, selectedItem.Id);
-                title_product_upd.Text = "";
-                description_product_upd.Text = "";
-                price_product_upd.Text = "";
-                count_product_upd.Text = "";
-                title_product_upd.IsEnabled = false;
-                description_product_upd.IsEnabled = false;
-                price_product_upd.IsEnabled = false;
-                count_product_upd.IsEnabled = false;
-                UpdateProductbtn.IsEnabled = false;
+                clear_fields(2, 2);
                 Products_grid_upd();
             }
         }
@@ -253,12 +296,8 @@ namespace Shop.View
         private async void UpdateUserbtn_Click(object sender, RoutedEventArgs e)
         {
             bool valid = true;
+            clear_fields(3, 3);
             User selectedItem = (User)usersGrid.SelectedItem;
-            err1_user_upd.Content = "";
-            err2_user_upd.Content = "";
-            err3_user_upd.Text = "";
-            err4_user_upd.Content = "";
-            err5_user_upd.Content = "";
             if (login_user_upd.Text.Length == 0)
             {
                 err1_user_upd.Content = "Login must be filled!";
@@ -362,18 +401,7 @@ namespace Shop.View
                     x.Add("role_id", (int)RoleBox_user_upd.SelectedValue);
                 }
                 await UserController.Update(x, selectedItem.Id);
-
-                login_user_upd.Text = "";
-                fio_user_upd.Text = "";
-                password_user_upd.Password = "";
-                password_rep_user_upd.Password = "";
-                RoleBox_user_upd.Items.Clear();
-                login_user_upd.IsEnabled = false;
-                fio_user_upd.IsEnabled = false;
-                password_user_upd.IsEnabled = false;
-                password_rep_user_upd.IsEnabled = false;
-                RoleBox_user_upd.IsEnabled = false;
-                UpdateUserbtn.IsEnabled = false;
+                clear_fields(3, 2);
                 Users_grid_upd();
             }
         }
@@ -387,16 +415,41 @@ namespace Shop.View
             App.Role_Session = null;
             this.Close();
         }
+        private void OrderReceiptbtn_Click(object sender, RoutedEventArgs e)
+        {
+            Order selectedItem = (Order)ordersGrid.SelectedItem;
+            OrderReceipt newWindow = new OrderReceipt(selectedItem);
+            newWindow.ShowDialog();
+        }
         private async void ordersGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Order selectedItem = (Order)ordersGrid.SelectedItem;
             if (selectedItem != null)
             {
-
+                fio_order_upd.Text = selectedItem.Fio_client;
+                phone_order_upd.Text = selectedItem.Phone_client;
+                email_order_upd.Text = selectedItem.Email_client;
+                address_order_upd.Text = selectedItem.Address_client;
+                List<ComboBoxItem> items = new List<ComboBoxItem>
+                {
+                    new ComboBoxItem { Text = "New", Value = 0 },
+                    new ComboBoxItem { Text = "Waiting for payment", Value = 1 },
+                    new ComboBoxItem { Text = "Paid", Value = 2 },
+                    new ComboBoxItem { Text = "Confirmed", Value = 3 },
+                    new ComboBoxItem { Text = "Awaiting shipment", Value = 4 },
+                    new ComboBoxItem { Text = "Delivery in progress", Value = 5 },
+                    new ComboBoxItem { Text = "Delivered", Value = 6 },
+                    new ComboBoxItem { Text = "Received", Value = 7 },
+                    new ComboBoxItem { Text = "Completed", Value = 8 },
+                    new ComboBoxItem { Text = "Canceled", Value = 9 }
+                };
+                StatusBox_order_upd.ItemsSource = items;
+                clear_fields(1, 3);
+                clear_fields(1, 1);
             }
             else
             {
-
+                clear_fields(1, 2);
             }
         }
 
@@ -411,24 +464,13 @@ namespace Shop.View
                 count_product_upd.Text = selectedItem.Count.ToString();
                 if (App.Role_Session != "cashier")
                 {
-                    title_product_upd.IsEnabled = true;
-                    description_product_upd.IsEnabled = true;
-                    price_product_upd.IsEnabled = true;
-                    count_product_upd.IsEnabled = true;
-                    UpdateProductbtn.IsEnabled = true;
+                    clear_fields(2, 1);
                 }
             }
             else
             {
-                title_product_upd.Text = "";
-                description_product_upd.Text = "";
-                price_product_upd.Text = "";
-                count_product_upd.Text = "";
-                title_product_upd.IsEnabled = false;
-                description_product_upd.IsEnabled = false;
-                price_product_upd.IsEnabled = false;
-                count_product_upd.IsEnabled = false;
-                UpdateProductbtn.IsEnabled = false;
+                clear_fields(2, 3);
+                clear_fields(2, 2);
             }
         }
 
@@ -459,27 +501,12 @@ namespace Shop.View
                         RoleBox_user_upd.Items.Add(item);
                     }
                 }
-
-                login_user_upd.IsEnabled = true;
-                fio_user_upd.IsEnabled = true;
-                password_user_upd.IsEnabled = true;
-                password_rep_user_upd.IsEnabled = true;
-                RoleBox_user_upd.IsEnabled = true;
-                UpdateUserbtn.IsEnabled = true;
+                clear_fields(3, 1);
             }
             else
             {
-                login_user_upd.Text = "";
-                fio_user_upd.Text = "";
-                password_user_upd.Password = "";
-                password_rep_user_upd.Password = "";
-                RoleBox_user_upd.Items.Clear();
-                login_user_upd.IsEnabled = false;
-                fio_user_upd.IsEnabled = false;
-                password_user_upd.IsEnabled = false;
-                password_rep_user_upd.IsEnabled = false;
-                RoleBox_user_upd.IsEnabled = false;
-                UpdateUserbtn.IsEnabled = false;
+                clear_fields(3, 3);
+                clear_fields(3, 2);
             }
         }
         //Keyboard inputs
@@ -516,6 +543,108 @@ namespace Shop.View
                     User selectedItem = (User)usersGrid.SelectedItem;
                     usersDelete(selectedItem);
                 }
+            }
+        }
+        private void clear_fields(int page, int section)
+        { 
+            switch (page)
+            {
+                case 1:
+                    switch (section) {
+                        case 1:
+                            fio_order_upd.IsEnabled = true;
+                            phone_order_upd.IsEnabled = true;
+                            email_order_upd.IsEnabled = true;
+                            address_order_upd.IsEnabled = true;
+                            StatusBox_order_upd.IsEnabled = true;
+                            UpdateOrderbtn.IsEnabled = true;
+                            OrderReceiptbtn.IsEnabled = true;
+                            break;
+                        case 2:
+                            fio_order_upd.Text = "";
+                            phone_order_upd.Text = "";
+                            email_order_upd.Text = "";
+                            address_order_upd.Text = "";
+                            StatusBox_order_upd.ItemsSource = null;
+                            fio_order_upd.IsEnabled = false;
+                            phone_order_upd.IsEnabled = false;
+                            email_order_upd.IsEnabled = false;
+                            address_order_upd.IsEnabled = false;
+                            StatusBox_order_upd.IsEnabled = false;
+                            UpdateOrderbtn.IsEnabled = false;
+                            OrderReceiptbtn.IsEnabled = false;
+                            break;
+                        case 3:
+                            err1_order_upd.Content = "";
+                            err2_order_upd.Content = "";
+                            err3_order_upd.Content = "";
+                            err4_order_upd.Content = "";
+                            err5_order_upd.Content = "";
+                            break;
+                    }
+                    break;
+                case 2:
+                    switch (section)
+                    {
+                        case 1:
+                            title_product_upd.IsEnabled = true;
+                            description_product_upd.IsEnabled = true;
+                            price_product_upd.IsEnabled = true;
+                            count_product_upd.IsEnabled = true;
+                            UpdateProductbtn.IsEnabled = true;
+                            break;
+                        case 2:
+                            title_product_upd.Text = "";
+                            description_product_upd.Text = "";
+                            price_product_upd.Text = "";
+                            count_product_upd.Text = "";
+                            title_product_upd.IsEnabled = false;
+                            description_product_upd.IsEnabled = false;
+                            price_product_upd.IsEnabled = false;
+                            count_product_upd.IsEnabled = false;
+                            UpdateProductbtn.IsEnabled = false;
+                            break;
+                        case 3:
+                            err1_product_upd.Content = "";
+                            err2_product_upd.Content = "";
+                            err3_product_upd.Content = "";
+                            err4_product_upd.Content = "";
+                            break;
+                    }
+                    break;
+                case 3:
+                    switch (section)
+                    {
+                        case 1:
+                            login_user_upd.IsEnabled = true;
+                            fio_user_upd.IsEnabled = true;
+                            password_user_upd.IsEnabled = true;
+                            password_rep_user_upd.IsEnabled = true;
+                            RoleBox_user_upd.IsEnabled = true;
+                            UpdateUserbtn.IsEnabled = true;
+                            break;
+                        case 2:
+                            login_user_upd.Text = "";
+                            fio_user_upd.Text = "";
+                            password_user_upd.Password = "";
+                            password_rep_user_upd.Password = "";
+                            RoleBox_user_upd.Items.Clear();
+                            login_user_upd.IsEnabled = false;
+                            fio_user_upd.IsEnabled = false;
+                            password_user_upd.IsEnabled = false;
+                            password_rep_user_upd.IsEnabled = false;
+                            RoleBox_user_upd.IsEnabled = false;
+                            UpdateUserbtn.IsEnabled = false;
+                            break;
+                        case 3:
+                            err1_user_upd.Content = "";
+                            err2_user_upd.Content = "";
+                            err3_user_upd.Text = "";
+                            err4_user_upd.Content = "";
+                            err5_user_upd.Content = "";
+                            break;
+                    }
+                    break;
             }
         }
         //Delete func
@@ -594,5 +723,7 @@ namespace Shop.View
         {
             //MessageBox.Show("You don`t have permission to perform this operation!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
+
+
     }
 }

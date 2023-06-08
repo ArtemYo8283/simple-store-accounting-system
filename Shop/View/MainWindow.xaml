@@ -61,6 +61,7 @@
                             <DataGridTextColumn Header="Phone client" Binding="{Binding Phone_client}"/>
                             <DataGridTextColumn Header="Email client" Binding="{Binding Email_client}"/>
                             <DataGridTextColumn Header="Address client" Binding="{Binding Address_client}"/>
+                            <DataGridTextColumn Header="Last update date" Binding="{Binding Last_upd_date}"/>
                             <DataGridTextColumn Header="Status" Binding="{Binding status}"/>
                             <DataGridTemplateColumn Header="Products">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -93,8 +94,32 @@
                     </DataGrid>
                     <Button Grid.Column="1" Grid.ColumnSpan="2" Content="Create New Order" HorizontalAlignment="Center" VerticalAlignment="Center" Height="33" Width="402" Click="CreateOrderbtn_Click"/>
 
+
+
+                    <Label Grid.Column="1" Grid.Row="3" Content="Client`s fio" HorizontalAlignment="Left"  VerticalAlignment="Center" Height="30" RenderTransformOrigin="0.474,0.483" Width="66" Margin="3,0,0,0"/>
+                    <TextBox Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="317" Height="30" Name="fio_order_upd" Grid.ColumnSpan="2" Margin="101,0,0,0"/>
+                    <Label Grid.Column="1" Grid.Row="3" Content="" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="219" Foreground="Red" Name="err1_order_upd" Height="30" Grid.ColumnSpan="2" Margin="150,49,0,0" Grid.RowSpan="2"/>
+
+                    <Label Grid.Row="4" Content="Client`s phone" HorizontalAlignment="Left"  VerticalAlignment="Center" Height="30" Grid.Column="1" Width="86" Margin="3,0,0,0"/>
+                    <TextBox Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="317" Height="30" Name="phone_order_upd" Grid.ColumnSpan="2" Margin="101,0,0,0"/>
+                    <Label Grid.Column="1" Grid.Row="4" Content="" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="219" Foreground="Red" Name="err2_order_upd" Height="30" Grid.ColumnSpan="2" Margin="150,0,0,0" Grid.RowSpan="2"/>
+
+                    <Label Grid.Column="1" Grid.Row="5" Content="Client`s email" HorizontalAlignment="Left"  VerticalAlignment="Center" Height="30" Width="81" Margin="3,0,0,0"/>
+                    <TextBox Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="317" Height="30" Name="email_order_upd" Margin="101,0,0,0" Grid.ColumnSpan="2"/>
+                    <Label Grid.Column="1" Grid.Row="5" Content="" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="219" Foreground="Red" Name="err3_order_upd" Height="30" Grid.ColumnSpan="2" Margin="150,48,0,0" Grid.RowSpan="2"/>
+
+                    <Label Grid.Row="6" Content="Client`s address" HorizontalAlignment="Left" Margin="3,0,0,0"  VerticalAlignment="Center" Height="30" Width="93" Grid.Column="1"/>
+                    <TextBox Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Margin="101,0,0,0"  TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="317" Height="30" Name="address_order_upd" Grid.ColumnSpan="2"/>
+                    <Label Grid.Column="1" Grid.Row="6" Content="" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="219" Foreground="Red" Name="err4_order_upd" Height="30" Margin="150,53,0,0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+
+                    <Label Grid.Row="7" Content="Order`s Status" HorizontalAlignment="Left" Margin="3,0,0,0"  VerticalAlignment="Center" Height="30" Width="84" Grid.Column="1"/>
+                    <ComboBox Grid.Column="1" Grid.Row="7" Name="StatusBox_order_upd" DisplayMemberPath="Text" SelectedValuePath="Value" Margin="101,17,10,18" Height="30" Grid.ColumnSpan="2" />
+                    <Label Grid.Column="1" Grid.Row="7" Content="" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="219" Foreground="Red" Name="err5_order_upd" Height="30" Margin="150,47,0,0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+
+                    <Label Grid.Row="8" Content="Products:" HorizontalAlignment="Left" Margin="3,0,0,0"  VerticalAlignment="Center" Height="30" Width="84" Grid.Column="1"/>
+
                     <Button Grid.Column="1" Grid.Row="9" Content="Update order" HorizontalAlignment="Left" VerticalAlignment="Center" Height="33" Width="191" Name="UpdateOrderbtn" Click="UpdateOrderbtn_Click" Margin="13,0,0,0"/>
-                    <Button Grid.Column="2" Grid.Row="9" Content="Order Receipt" HorizontalAlignment="Left" VerticalAlignment="Center" Height="33" Width="191" Name="OrderReceiptbtn" Click="UpdateOrderbtn_Click" Margin="13,0,0,0"/>
+                    <Button Grid.Column="2" Grid.Row="9" Content="Order Receipt" HorizontalAlignment="Left" VerticalAlignment="Center" Height="33" Width="191" Name="OrderReceiptbtn" Click="OrderReceiptbtn_Click" Margin="13,0,0,0"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Products" Name="Products_Page">
@@ -116,7 +141,7 @@
                         <RowDefinition Height="72*"/>
                         <RowDefinition Height="72*"/>
                     </Grid.RowDefinitions>
-                    <DataGrid Name="productsGrid" Grid.Row="0" Grid.RowSpan="10" Margin="0,0,10,0" SelectionMode="Single" SelectionChanged="productsGrid_SelectionChanged" KeyDown="productsGrid_KeyDown">
+                    <DataGrid Name="productsGrid" Grid.Row="0" Grid.RowSpan="10" Margin="0,0,10,0" SelectionMode="Single" SelectionChanged="productsGrid_SelectionChanged" KeyDown="productsGrid_KeyDown" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <!-- Delete button column -->
                             <DataGridTemplateColumn Width="Auto" >
@@ -126,6 +151,11 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="Title"  Binding="{Binding Title}"/>
+                            <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                            <DataGridTextColumn Header="Price" Binding="{Binding Price}"/>
+                            <DataGridTextColumn Header="Count" Binding="{Binding Count}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button Grid.Column="1" Grid.ColumnSpan="2" Content="Create new Product" HorizontalAlignment="Left" VerticalAlignment="Center" Height="33" Width="402" Name="CreateProductbtn" Click="CreateProductbtn_Click" Margin="13,0,0,0"/>
@@ -168,7 +198,7 @@
                         <RowDefinition Height="72*"/>
                         <RowDefinition Height="72*"/>
                     </Grid.RowDefinitions>
-                    <DataGrid Name="usersGrid" Grid.Row="0" Grid.RowSpan="10" Margin="0,0,10,0" SelectionMode="Single" SelectionChanged="usersGrid_SelectionChanged" KeyDown="usersGrid_KeyDown">
+                    <DataGrid Name="usersGrid" Grid.Row="0" Grid.RowSpan="10" Margin="0,0,10,0" SelectionMode="Single" SelectionChanged="usersGrid_SelectionChanged" KeyDown="usersGrid_KeyDown" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <!-- Delete button column -->
                             <DataGridTemplateColumn Width="Auto" >
@@ -178,6 +208,11 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="Login"  Binding="{Binding Login}"/>
+                            <DataGridTextColumn Header="Fio" Binding="{Binding Fio}"/>
+                            <DataGridTextColumn Header="Last login date" Binding="{Binding Last_login_date}"/>
+                            <DataGridTextColumn Header="Role id" Binding="{Binding Role_id}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button Grid.Column="1" Grid.ColumnSpan="2" Content="Register new User" HorizontalAlignment="Center" VerticalAlignment="Center" Height="33" Width="402" Click="RegisterUserbtn_Click"/>
