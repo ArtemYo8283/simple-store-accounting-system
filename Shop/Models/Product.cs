@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Shop.Models
 {
@@ -61,7 +62,7 @@ namespace Shop.Models
         }
         public static async Task<List<Product>> SelectByOrderId(int id)
         {
-            string sql = string.Format("SELECT products.id, products.title, products.description, products.price, products.count FROM products INNER JOIN order_product ON order_product.order_id = {0} AND products.id = order_product.product_id;", id);
+            string sql = string.Format("SELECT products.id, products.title, products.description, products.price, order_product.product_count FROM products INNER JOIN order_product ON order_product.order_id = {0} AND products.id = order_product.product_id;", id);
             MySqlCommand command = new MySqlCommand(sql, App.connection);
             MySqlDataReader reader = command.ExecuteReader();
             List<Product> result = new List<Product>();
@@ -71,7 +72,7 @@ namespace Shop.Models
                 string title = reader.GetString("title");
                 string description = reader.GetString("description");
                 double price = reader.GetDouble("price");
-                int count = reader.GetInt32("count");
+                int count = reader.GetInt32("product_count");
                 result.Add(new Product(ide, title, description, price, count));
             }
             reader.Close();
@@ -80,6 +81,14 @@ namespace Shop.Models
         public static async Task<int> Create(string title, string description, double price, int count)
         {
             string sql = string.Format("INSERT INTO products (title, description, price, count) VALUES ('{0}', '{1}', '{2}', {3});", title, description, price, count);
+            MySqlCommand command = new MySqlCommand(sql, App.connection);
+            int rowsAffected = command.ExecuteNonQuery();
+            return rowsAffected;
+        }
+        public static async Task<int> Create_ListOfPRoduct(int order_id, int product_id, int product_count)
+        {
+            string sql = string.Format("INSERT INTO order_product (order_id, product_id, product_count) VALUES ('{0}', '{1}', '{2}');", order_id, product_id, product_count);
+            MessageBox.Show(sql, "Message Box Title", MessageBoxButton.OK, MessageBoxImage.Information);
             MySqlCommand command = new MySqlCommand(sql, App.connection);
             int rowsAffected = command.ExecuteNonQuery();
             return rowsAffected;

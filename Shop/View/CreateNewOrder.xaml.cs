@@ -24,6 +24,7 @@ namespace Shop.View
     }
     public partial class CreateNewOrder : Window
     {
+        List<Product> selectedProducts;
         public CreateNewOrder()
         {
             InitializeComponent();
@@ -99,7 +100,7 @@ namespace Shop.View
 
             if (valid)
             {
-                if (await OrderController.Create(fio.Text, phone.Text, email.Text, address.Text, (Status)(int)StatusBox.SelectedValue))
+                if (await OrderController.Create(fio.Text, phone.Text, email.Text, address.Text, (Status)(int)StatusBox.SelectedValue, selectedProducts))
                 {
                     this.Close();
                 }
@@ -132,6 +133,13 @@ namespace Shop.View
             };
 
             StatusBox.ItemsSource = items;
+        }
+
+        private void CreateListOrderProductUpdbtn_Click(object sender, RoutedEventArgs e)
+        {
+            CreateListOfOrderProducts newWindow = new CreateListOfOrderProducts();
+            newWindow.ShowDialog();
+            selectedProducts = newWindow.SelectedProducts;
         }
     }
 }

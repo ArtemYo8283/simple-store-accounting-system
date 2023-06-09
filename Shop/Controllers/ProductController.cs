@@ -31,6 +31,15 @@ namespace Shop.Controllers
             }
             return true;
         }
+        public static async Task<bool> Create_ListOfPRoduct(int order_id, int product_id, int product_count)
+        {
+            int result = await Product.Create_ListOfPRoduct(order_id, product_id, product_count);
+            if (result == 0)
+            {
+                return false;
+            }
+            return true;
+        }
         public static async Task<bool> Update(Dictionary<string, Object> field, int id)
         {
             int result = await Product.Update(field, id);

@@ -220,7 +220,7 @@ namespace Shop.View
                 x.Add("phone_client", phone_order_upd.Text);
                 x.Add("email_client", email_order_upd.Text);
                 x.Add("address_client", address_order_upd.Text);
-                x.Add("status", (Status)(int)StatusBox_order_upd.SelectedValue);
+                x.Add("status", Utils.StatusToString((Status)(int)StatusBox_order_upd.SelectedValue));
                 await OrderController.Update(x, selectedItem.Id);
                 clear_fields(1, 2);
                 Orders_grid_upd();
@@ -385,12 +385,11 @@ namespace Shop.View
 
             if (valid)
             {
-               
                 Dictionary<string, object> x = new Dictionary<string, object>();
                 x.Add("login", login_user_upd.Text);
                 x.Add("fio", fio_user_upd.Text);
                 if (password_user_upd.Password.Length != 0) {
-                    x.Add("password", password_user_upd.Password);
+                    x.Add("password", await Utils.HashPsw(password_user_upd.Password));
                 }
 
                 if (App.Role_Session == "director") {
@@ -421,6 +420,13 @@ namespace Shop.View
             OrderReceipt newWindow = new OrderReceipt(selectedItem);
             newWindow.ShowDialog();
         }
+        private void EditListOrderProductUpdbtn_Click(object sender, RoutedEventArgs e)
+        {
+            Order selectedItem = (Order)ordersGrid.SelectedItem;
+            EditListOfOrderProducts newWindow = new EditListOfOrderProducts(selectedItem);
+            newWindow.ShowDialog();
+            
+        }
         private async void ordersGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Order selectedItem = (Order)ordersGrid.SelectedItem;
@@ -444,8 +450,20 @@ namespace Shop.View
                     new ComboBoxItem { Text = "Canceled", Value = 9 }
                 };
                 StatusBox_order_upd.ItemsSource = items;
+                foreach (ComboBoxItem item in StatusBox_order_upd.Items)
+                {
+                    if ((Status)(int)item.Value == selectedItem.status)
+                    {
+                        StatusBox_order_upd.SelectedItem = item;
+                        break;
+                    }
+                }
                 clear_fields(1, 3);
                 clear_fields(1, 1);
+                if (selectedItem.products.Count == 0)
+                {
+                    EditListOrderProductUpdbtn.IsEnabled = false;
+                }
             }
             else
             {
@@ -484,24 +502,31 @@ namespace Shop.View
 
                 List<Role> x = await RoleController.selectAll();
                 RoleBox_user_upd.Items.Clear();
-                if (App.Role_Session == "admin")
+                foreach (Role item in x)
                 {
-                    foreach (Role item in x)
+                    RoleBox_user_upd.Items.Add(item);
+                }
+                foreach (Role item in RoleBox_user_upd.Items)
+                {
+                    if (item.Id == selectedItem.Role_id)
                     {
-                        if (item.Title == "cashier")
-                        {
-                            RoleBox_user_upd.Items.Add(item);
-                        }
+                        RoleBox_user_upd.SelectedItem = item;
+                        break;
                     }
                 }
-                else if (App.Role_Session == "director")
+                if (App.Role_Session == "admin" && selectedItem.Role_id > 1)
                 {
-                    foreach (Role item in x)
-                    {
-                        RoleBox_user_upd.Items.Add(item);
-                    }
+                    login_user_upd.IsEnabled = false;
+                    fio_user_upd.IsEnabled = false;
+                    password_user_upd.IsEnabled = false;
+                    password_rep_user_upd.IsEnabled = false;
+                    RoleBox_user_upd.IsEnabled = false;
+                    UpdateUserbtn.IsEnabled = false;
                 }
-                clear_fields(3, 1);
+                else 
+                {
+                    clear_fields(3, 1);
+                }
             }
             else
             {
@@ -559,6 +584,7 @@ namespace Shop.View
                             StatusBox_order_upd.IsEnabled = true;
                             UpdateOrderbtn.IsEnabled = true;
                             OrderReceiptbtn.IsEnabled = true;
+                            EditListOrderProductUpdbtn.IsEnabled = true;
                             break;
                         case 2:
                             fio_order_upd.Text = "";
@@ -573,6 +599,7 @@ namespace Shop.View
                             StatusBox_order_upd.IsEnabled = false;
                             UpdateOrderbtn.IsEnabled = false;
                             OrderReceiptbtn.IsEnabled = false;
+                            EditListOrderProductUpdbtn.IsEnabled = false;
                             break;
                         case 3:
                             err1_order_upd.Content = "";
@@ -723,7 +750,5 @@ namespace Shop.View
         {
             //MessageBox.Show("You don`t have permission to perform this operation!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-
-
     }
 }

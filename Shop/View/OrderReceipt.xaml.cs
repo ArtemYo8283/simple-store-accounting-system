@@ -24,21 +24,20 @@ using Shop.Models;
 
 namespace Shop.View
 {
-    /// <summary>
-    /// Interaction logic for OrderReceipt.xaml
-    /// </summary>
     public partial class OrderReceipt : Window
     {
         public Order order { get; set; }
         public OrderReceipt(Order order)
         {
             InitializeComponent();
+            DateTime now = DateTime.Now;
             this.order = order;
-            receipt.Text =
+            double sum = 0;
+            string str =
                 "=============================================\n" +
                 "Cashier: " + App.Fio_Session + "\n" +
                 "=============================================\n" +
-                "Date: " + App.Fio_Session + "\n" +
+                "Date: " + now.ToString("HH:mm:ss dd.MM.yyyy") + "\n" +
                 "=============================================\n" +
                 "Fio: " + order.Fio_client + "\n" +
                 "Phone" + order.Phone_client + "\n" +
@@ -47,9 +46,17 @@ namespace Shop.View
                 "Status: " + Utils.StatusToString(order.status) + "\n" +
                 "=============================================\n" +
                 "Product count: " + order.products.Count + "\n" +
-                "Products:\n" +
-                "=============================================\n" +
-                "";
+                "Products:\n";
+            foreach (Product item in order.products)
+            {
+                str += "\tTitle: " + item.Title + "\n" +
+                    "\tCount: " + item.Count + "\n" +
+                    "\tPrice: " + item.Price + "\n\n";
+                sum += item.Count * item.Price;
+            }
+            str += "Total price: " + Math.Round(sum, 2) + "\n" +
+                "=============================================\n";
+            receipt.Text = str;
         }
 
         private void Print_btn_Click(object sender, RoutedEventArgs e)

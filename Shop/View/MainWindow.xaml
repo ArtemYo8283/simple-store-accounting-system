@@ -110,13 +110,14 @@
 
                     <Label Grid.Row="6" Content="Client`s address" HorizontalAlignment="Left" Margin="3,0,0,0"  VerticalAlignment="Center" Height="30" Width="93" Grid.Column="1"/>
                     <TextBox Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Margin="101,0,0,0"  TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="317" Height="30" Name="address_order_upd" Grid.ColumnSpan="2"/>
-                    <Label Grid.Column="1" Grid.Row="6" Content="" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="219" Foreground="Red" Name="err4_order_upd" Height="30" Margin="150,53,0,0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                    <Label Grid.Column="1" Grid.Row="6" Content="" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="219" Foreground="Red" Name="err4_order_upd" Height="30" Margin="150,50,0,0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
 
                     <Label Grid.Row="7" Content="Order`s Status" HorizontalAlignment="Left" Margin="3,0,0,0"  VerticalAlignment="Center" Height="30" Width="84" Grid.Column="1"/>
                     <ComboBox Grid.Column="1" Grid.Row="7" Name="StatusBox_order_upd" DisplayMemberPath="Text" SelectedValuePath="Value" Margin="101,17,10,18" Height="30" Grid.ColumnSpan="2" />
-                    <Label Grid.Column="1" Grid.Row="7" Content="" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="219" Foreground="Red" Name="err5_order_upd" Height="30" Margin="150,47,0,0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                    <Label Grid.Column="1" Grid.Row="7" Content="" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="219" Foreground="Red" Name="err5_order_upd" Height="30" Margin="150,52,0,0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
 
-                    <Label Grid.Row="8" Content="Products:" HorizontalAlignment="Left" Margin="3,0,0,0"  VerticalAlignment="Center" Height="30" Width="84" Grid.Column="1"/>
+                    <Label Grid.Row="8" Content="Products:" HorizontalAlignment="Left" Margin="3,24,0,0"  VerticalAlignment="Top" Height="30" Width="84" Grid.Column="1"/>
+                    <Button Grid.Column="1" Grid.Row="8" Content="Show list of products" HorizontalAlignment="Left" VerticalAlignment="Top" Height="33" Width="314" Name="EditListOrderProductUpdbtn" Click="EditListOrderProductUpdbtn_Click" Margin="101,20,0,0" Grid.ColumnSpan="2"/>
 
                     <Button Grid.Column="1" Grid.Row="9" Content="Update order" HorizontalAlignment="Left" VerticalAlignment="Center" Height="33" Width="191" Name="UpdateOrderbtn" Click="UpdateOrderbtn_Click" Margin="13,0,0,0"/>
                     <Button Grid.Column="2" Grid.Row="9" Content="Order Receipt" HorizontalAlignment="Left" VerticalAlignment="Center" Height="33" Width="191" Name="OrderReceiptbtn" Click="OrderReceiptbtn_Click" Margin="13,0,0,0"/>

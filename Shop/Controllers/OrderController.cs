@@ -18,14 +18,17 @@ namespace Shop.Controllers
         {
             return await Order.SelectById(id);
         }
-        public static async Task<bool> Create(string fio_client, string phone_client, string email_client, string address_client, Status st)
+        public static async Task<bool> Create(string fio_client, string phone_client, string email_client, string address_client, Status st, List<Product> selectedProducts)
         {
             DateTime currentDateTime = DateTime.Now;
             string last_upd_date = currentDateTime.ToString("yyyy-MM-dd HH:mm:ss");
-            int result = await Order.Create(fio_client, phone_client, email_client, address_client, last_upd_date, st);
-            if (result == 0)
+            int insertedID = await Order.Create(fio_client, phone_client, email_client, address_client, last_upd_date, st);
+            if (selectedProducts != null)
             {
-                return false;
+                foreach (Product item in selectedProducts)
+                {
+                    await ProductController.Create_ListOfPRoduct(insertedID, item.Id, item.Count);
+                }
             }
             return true;
         }

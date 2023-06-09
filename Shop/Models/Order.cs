@@ -83,10 +83,10 @@ namespace Shop.Models
         }
         public static async Task<int> Create(string fio_client, string phone_client, string email_client, string address_client, string last_upd_date, Status st)
         {
-            string sql = string.Format("INSERT INTO orders (fio_client, phone_client, email_client, address_client,last_upd_date, status) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}');", fio_client, phone_client, email_client, address_client, last_upd_date, Utils.StatusToString(st));
+            string sql = string.Format("INSERT INTO orders (fio_client, phone_client, email_client, address_client, last_upd_date, status) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}'); SELECT LAST_INSERT_ID();", fio_client, phone_client, email_client, address_client, last_upd_date, Utils.StatusToString(st));
             MySqlCommand command = new MySqlCommand(sql, App.connection);
-            int rowsAffected = command.ExecuteNonQuery();
-            return rowsAffected;
+            int insertedID = Convert.ToInt32(command.ExecuteScalar());
+            return insertedID;
         }
         public static async Task<int> Update(Dictionary<string, Object> field, int id)
         {
