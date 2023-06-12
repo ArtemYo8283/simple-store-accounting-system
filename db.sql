@@ -34,7 +34,7 @@ CREATE TABLE `order_product` (
   KEY `FK1_OP_idx` (`product_id`),
   CONSTRAINT `FK0_OP` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FK1_OP` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,6 @@ CREATE TABLE `order_product` (
 
 LOCK TABLES `order_product` WRITE;
 /*!40000 ALTER TABLE `order_product` DISABLE KEYS */;
-INSERT INTO `order_product` VALUES (5,1,1,2),(6,1,2,34);
 /*!40000 ALTER TABLE `order_product` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -102,9 +101,10 @@ CREATE TABLE `orders` (
   `phone_client` varchar(500) NOT NULL,
   `email_client` varchar(500) DEFAULT NULL,
   `address_client` varchar(500) NOT NULL,
+  `last_upd_date` datetime DEFAULT NULL,
   `status` enum('New','Waiting for payment','Paid','Confirmed','Awaiting shipment','Delivery in progress','Delivered','Received','Completed','Canceled') NOT NULL DEFAULT 'New',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -113,7 +113,6 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,'qwertyu','+380660683912','artemwot90@gmail.com','aksaflamdg;sdm','Paid');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -131,7 +130,7 @@ CREATE TABLE `products` (
   `price` double NOT NULL,
   `count` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -140,7 +139,6 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (1,'dadasfasff','mm;lsdmgksd',1234,121),(2,'Atrtrf','dfsdf',234,234291),(3,'dasdas121313','sadasdas',123123,123123);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -194,9 +192,13 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'abondar','c3df2ffdb3ee113b22923b722f2ca59bd5fd4396701280eeb0bfbc831ca494ee','Artem Bondar','2023-06-08 12:41:46',3),(2,'abondar1','c3df2ffdb3ee113b22923b722f2ca59bd5fd4396701280eeb0bfbc831ca494ee','Artem Bondar','2023-06-04 18:41:46',2),(3,'abondar2','c3df2ffdb3ee113b22923b722f2ca59bd5fd4396701280eeb0bfbc831ca494ee','Abobishe12345','2023-06-06 00:15:57',1);
+INSERT INTO `users` VALUES (1,'admin','60fe74406e7f353ed979f350f2fbb6a2e8690a5fa7d1b0c32983d1d8b3f95f67','Admin','2023-06-12 10:24:25',3);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'shopcsharp'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -207,4 +209,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-08 12:42:40
+-- Dump completed on 2023-06-12 10:26:48

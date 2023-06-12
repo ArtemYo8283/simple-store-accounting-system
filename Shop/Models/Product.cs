@@ -80,7 +80,7 @@ namespace Shop.Models
         }
         public static async Task<int> Create(string title, string description, double price, int count)
         {
-            string sql = string.Format("INSERT INTO products (title, description, price, count) VALUES ('{0}', '{1}', '{2}', {3});", title, description, price, count);
+            string sql = string.Format("INSERT INTO products (title, description, price, count) VALUES ('{0}', '{1}', '{2}', {3});", title, description, price.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture), count);
             MySqlCommand command = new MySqlCommand(sql, App.connection);
             int rowsAffected = command.ExecuteNonQuery();
             return rowsAffected;

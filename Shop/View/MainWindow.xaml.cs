@@ -285,7 +285,8 @@ namespace Shop.View
                 Dictionary<string, object> x = new Dictionary<string, object>();
                 x.Add("title", title_product_upd.Text);
                 x.Add("description", description_product_upd.Text);
-                x.Add("price", Double.Parse(price_product_upd.Text));
+                x.Add("price", Double.Parse(price_product_upd.Text).ToString("0." +
+                    "##", System.Globalization.CultureInfo.InvariantCulture));
                 x.Add("count", Int32.Parse(count_product_upd.Text));
                 await ProductController.Update(x, selectedItem.Id);
                 clear_fields(2, 2);
